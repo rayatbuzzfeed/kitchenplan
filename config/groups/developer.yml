@@ -6,7 +6,6 @@ recipes:
 #        - applications::macvim          # install xcode before trying to compile macvim
         - dotfiles::vim
         - applications::composer
-        - applications::postgresql
         - applications::mysql
         - applications::php55
         - dotfiles::workspace
@@ -27,7 +26,6 @@ recipes:
         - osxdefaults::increase_window_resize_speed_for_cocoa_applications
         - osxdefaults::speed_up_mission_control_animations
         - osxdefaults::tap_to_click
-        - osxdefaults::do_not_show_dashboard_as_a_space
         - osxdefaults::prevent_time_machine_from_prompting_to_use_new_hard_drives_as_backup_volume
         - osxdefaults::finder_allow_text_selection_in_quick_look
         - osxdefaults::finder_display_full_path
