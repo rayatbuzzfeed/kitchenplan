@@ -112,18 +112,18 @@ def wait_for_user
 end
 
 def macos_version
-  @macos_version ||= `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
+  @macos_version ||= `/usr/bin/sw_vers -productVersion |awk -F "." \'{ print $2 }\'`.to_i
 end
 
 ######################################################
 
-abort "OSX too old, you need at least Mountain Lion" if macos_version < "10.8"
+abort "OSX too old, you need at least Mountain Lion" if macos_version < 8 
 abort "Don't run this as root!" if Process.uid == 0
 abort <<-EOABORT unless `groups`.split.include? "admin"
 This script requires the user #{ENV['USER']} to be an Administrator.
 EOABORT
 
-if macos_version < "10.9" and macos_version > "10.6"
+if macos_version < 9 and macos_version > 6
   `/usr/bin/cc --version 2> /dev/null` =~ %r[clang-(\d{2,})]
   version = $1.to_i
   warnandexit %{Install the "Command Line Tools for Xcode": https://developer.apple.com/downloads/} if version < 425
@@ -141,7 +141,7 @@ puts ""
 
 wait_for_user if options[:interaction]
 
-if macos_version > "10.8"
+if macos_version > 8
   unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
     ohai "Installing the Command Line Tools (expect a GUI popup):"
     sudo "/usr/bin/xcode-select", "--install"
